@@ -42,12 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-    'task'
-=======
     'tasks',
     'drf_yasg',
->>>>>>> edit_branch
 ]
 
 MIDDLEWARE = [
