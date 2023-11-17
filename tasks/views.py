@@ -6,6 +6,25 @@ from .serializers import TaskSerializer
 from .tasks import send_email_task
 
 class TaskViewSet(viewsets.ModelViewSet):
+    """
+    retrieve:
+    Devuelve una instancia de tarea específica.
+
+    list:
+    Devuelve todas las tareas.
+
+    create:
+    Crea una nueva tarea.
+
+    delete:
+    Elimina una tarea existente.
+
+    partial_update:
+    Actualiza uno o más campos en una tarea existente.
+
+    update:
+    Actualiza una tarea.
+    """
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
