@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Tareas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="py-4">
+    <div class="container">
+        <h1>Listado de Tareas</h1>
+        <a href="{% url 'create_task' %}" class="btn btn-primary my-3">Crear Nueva Tarea</a>
+        <div class="list-group">
+            {% for task in tasks %}
+                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div class="flex-grow-1">
+                        <h5 class="mb-1">{{ task.title }}</h5>
+                        <p class="mb-1">{{ task.description }}</p>
+                        <small>{{ task.email }}</small>
+                    </div>
+                    <div>
+                        <!-- Botón de editar -->
+                        <a href="{% url 'update_task' task.id %}" class="btn btn-primary btn-sm">Editar</a>
+                        <!-- Formulario de eliminación -->
+                        <form action="{% url 'delete_task' task.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
