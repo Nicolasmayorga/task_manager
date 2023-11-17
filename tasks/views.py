@@ -3,8 +3,8 @@ from rest_framework import viewsets
 from .models import Task
 from .forms import TaskForm
 from .serializers import TaskSerializer
+from .tasks import send_email_task
 
-# DRF ViewSet
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
@@ -19,7 +19,12 @@ def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save()
+            send_email_task.delay(
+                'Nueva Tarea Creada',
+                f'Tarea "{task.title}" ha sido creada con éxito.',
+                task.email
+            )
             return redirect('list_tasks')
     else:
         form = TaskForm()
@@ -31,7 +36,12 @@ def update_task(request, pk):
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            form.save()
+            task = form.save()
+            send_email_task.delay(
+                'Tarea Actualizada',
+                f'Tu tarea "{task.title}" ha sido actualizada.',
+                task.email
+            )
             return redirect('list_tasks')
     else:
         form = TaskForm(instance=task)
@@ -41,6 +51,11 @@ def update_task(request, pk):
 def delete_task(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
+        send_email_task.delay(
+            'Tarea Eliminada',
+            f'La tarea "{task.title}" ha sido eliminada.',
+            task.email
+        )
         task.delete()
         return redirect('list_tasks')
     return render(request, 'tasks/delete_task.html', {'task': task})
