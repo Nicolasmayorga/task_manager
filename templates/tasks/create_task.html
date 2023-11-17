@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Crear Tarea</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>Crear Tarea</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Crear</button>
-    </form>
+<body class="py-4">
+    <div class="container">
+        <h1>Crear Tarea</h1>
+        <form method="post" class="my-3">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="{% url 'list_tasks' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
 </body>
 </html>

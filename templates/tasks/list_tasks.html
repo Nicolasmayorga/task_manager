@@ -2,19 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Tareas</title>
+    <title>Listado de Tareas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>Lista de Tareas</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>
-                <strong>{{ task.title }}</strong> - {{ task.email }} - {{ task.description }}
-                <a href="{% url 'update_task' task.id %}">Editar</a>
-                <a href="{% url 'delete_task' task.id %}">Eliminar</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'create_task' %}">Crear Tarea</a>
+<body class="py-4">
+    <div class="container">
+        <h1>Listado de Tareas</h1>
+        <a href="{% url 'create_task' %}" class="btn btn-primary my-3">Crear Nueva Tarea</a>
+        <div class="list-group">
+            {% for task in tasks %}
+                <a href="{% url 'update_task' task.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div class="flex-grow-1">
+                        <h5 class="mb-1">{{ task.title }}</h5>
+                        <p class="mb-1">{{ task.description }}</p>
+                        <small>{{ task.email }}</small>
+                    </div>
+                    <div>
+                        <span class="badge badge-primary badge-pill">Editar</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>

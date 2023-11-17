@@ -130,3 +130,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],  # Asegúrate de que esta ruta sea correcta
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',  # Necesario para el sidebar del admin
+                'django.contrib.auth.context_processors.auth',  # Necesario para el auth backend
+                'django.contrib.messages.context_processors.messages',  # Necesario para el sistema de mensajes
+            ],
+        },
+    },
+]
